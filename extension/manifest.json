@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Mute Farm Bot Twitter/X",
+  "version": "0.1",
+  "permissions": ["scripting", "tabs", "storage", "scripting"],
+  "host_permissions": ["https://x.com/*"],
+  "externally_connectable": {
+    "ids": ["lnobhlnamiibdgjdaojoolicmodaohlf"],
+    "matches": ["https://x.com/*"]
+  },
+  "content_scripts": [
+    {
+      "world": "MAIN",
+      "matches": ["https://x.com/*"],
+      "js": ["dist/script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  }
+}
