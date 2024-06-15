@@ -23,6 +23,8 @@ func getMutedBots(w http.ResponseWriter, _ *http.Request) {
 
 	if bots == nil {
 		bots = []database.MutedBots{}
+		json.NewEncoder(w).Encode(bots)
+		return
 	}
 
 	var botsHandle []string
