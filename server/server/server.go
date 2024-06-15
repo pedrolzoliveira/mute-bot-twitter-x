@@ -2,11 +2,8 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"mutebotx/database"
 	"net/http"
-
-	"github.com/mattn/go-sqlite3"
 )
 
 func getMutedBots(w http.ResponseWriter, _ *http.Request) {
@@ -63,14 +60,8 @@ func muteBot(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := db.Exec("INSERT INTO muted_bots (user_handle) VALUES (?)", req.UserHandle)
+	_, err := db.Exec("INSERT OR IGNORE INTO muted_bots (user_handle) VALUES (?)", req.UserHandle)
 	if err != nil {
-		if sqliteErr, ok := err.(sqlite3.Error); ok && sqliteErr.Code == sqlite3.ErrConstraint {
-			w.WriteHeader(http.StatusOK)
-			return
-		}
-
-		fmt.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
