@@ -74,7 +74,7 @@ func CreateServer() http.Handler {
 	server.HandleFunc("GET /muted-accounts", getMutedBots)
 	server.HandleFunc("POST /mute", muteBot)
 
-	handler := cors.Default().Handler(server)
+	handler := cors.AllowAll().Handler(server)
 
 	return wrap(handler)
 }
