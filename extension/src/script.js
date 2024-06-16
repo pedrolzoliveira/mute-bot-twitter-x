@@ -89,10 +89,6 @@ window.addEventListener("message", (event) => {
     return;
   }
 
-  if (event.data.type === "MUTEX_EXTENSION_ID") {
-    console.log('MUTEX_EXTENSION_ID call', event.data.message);
-  }
-
   if (event.data?.type === "MUTEX_EXTENSION") {
     console.log('MUTEX_EXTENSION call');
     mutedTwitterAccounts = new Set(event.data.message);
