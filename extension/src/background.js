@@ -2,7 +2,7 @@ const MINUTE_IN_MS = 1000 * 60;
 
 (async function updateMutedTwitterAccounts() {
   try {
-    const response = await fetch('http://localhost:8080/muted-accounts');
+    const response = await fetch('https://mutebotx.xyz/muted-accounts');
     const mutedTwitterAccounts = await response.json();
     chrome.storage.local.set({ mutedTwitterAccounts });
 
@@ -32,7 +32,7 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
     });
     return true;
   } else if (message.type === 'muteTwitterAccount') {
-    fetch('http://localhost:8080/mute', {
+    fetch('https://mutebotx.xyz/mute', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_handle: message.userHandle })
