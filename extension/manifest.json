@@ -4,6 +4,7 @@
   "description": "Shared mute list for Twitter/X, target to mute farm bots in the replies of popular tweets.",
   "version": "0.1.0",
   "permissions": ["scripting", "tabs", "storage"],
+  "host_permissions": ["https://x.com/*"],
   "externally_connectable": {
     "matches": ["https://x.com/*"]
   },
