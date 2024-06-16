@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+type getMutedBotsResponse []string
+
 func getMutedBots(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
@@ -14,6 +16,8 @@ func getMutedBots(w http.ResponseWriter, _ *http.Request) {
 
 	db := database.CreateDatabase()
 	var bots []database.MutedBots
+	var response getMutedBotsResponse = make([]string, 0)
+
 	err := db.Select(&bots, "SELECT * FROM muted_bots")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -22,18 +26,15 @@ func getMutedBots(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	if bots == nil {
-		bots = []database.MutedBots{}
-		json.NewEncoder(w).Encode(bots)
+		json.NewEncoder(w).Encode(response)
 		return
 	}
 
-	var botsHandle []string
-
 	for _, bot := range bots {
-		botsHandle = append(botsHandle, bot.UserHandle)
+		response = append(response, bot.UserHandle)
 	}
 
-	json.NewEncoder(w).Encode(botsHandle)
+	json.NewEncoder(w).Encode(response)
 }
 
 type MuteBotRequest struct {
@@ -59,6 +60,11 @@ func muteBot(w http.ResponseWriter, r *http.Request) {
 	var req MuteBotRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if req.UserHandle == "" {
+		http.Error(w, "user_handle is required", http.StatusBadRequest)
 		return
 	}
 

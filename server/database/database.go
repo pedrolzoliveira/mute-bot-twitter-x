@@ -1,6 +1,8 @@
 package database
 
 import (
+	"flag"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -18,11 +20,16 @@ type MutedBots struct {
 var db *sqlx.DB
 
 func CreateDatabase() *sqlx.DB {
+	var err error
 	if db != nil {
 		return db
 	}
 
-	db, err := sqlx.Connect("sqlite3", "./mutebotx.db")
+	if flag.Lookup("test.v") != nil {
+		db, err = sqlx.Connect("sqlite3", ":memory:")
+	} else {
+		db, err = sqlx.Connect("sqlite3", "./mutebotx.db")
+	}
 	if err != nil {
 		panic(err)
 	}
