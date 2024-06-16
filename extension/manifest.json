@@ -4,9 +4,7 @@
   "description": "Shared mute list for Twitter/X, target to mute farm bots in the replies of popular tweets.",
   "version": "0.1.0",
   "permissions": ["scripting", "tabs", "storage"],
-  "host_permissions": ["https://x.com/*"],
   "externally_connectable": {
-    "ids": ["lnobhlnamiibdgjdaojoolicmodaohlf"],
     "matches": ["https://x.com/*"]
   },
   "content_scripts": [
@@ -24,5 +22,6 @@
     "16": "icon.png",
     "48": "icon.png", 
     "128": "icon.png"
-  }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuQTqTI3To2XJAqICMUtw5PFCy4N8nqZh14s7XLf700H3yodcbr/JfLbh8bKm7sRPKEiBNQfK4i6bpi0XsEcyTLVvuHeLXXukehEE0/Ak8fjD26WDnMQCRVNsz4YieLHL5abzIFz+9RbKVcAJzDX/Io5hhioDWeN1ztmbmh7Vj0oAmBw8Ex/pFxPt9OOrb8LRRWZjXocvDXPqbCOckXrH7jlUtaYZ51utSZKYJ3PzZ2Q/pnWFDGdPARSnqQgtKIlxRi3PDLarbJipqHodGI1WLyRMdAknwIRmTkty+/2j7Ply9aO6JIZC1cp7xYysqnXUKkaM/lFvCOy+pAlqXbCMcwIDAQAB"
 }
