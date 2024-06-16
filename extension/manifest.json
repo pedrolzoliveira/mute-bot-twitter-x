@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Mute Farm Bot Twitter/X",
-  "version": "0.1",
-  "permissions": ["scripting", "tabs", "storage", "scripting"],
+  "version": "0.1.0",
+  "permissions": ["scripting", "tabs", "storage"],
   "host_permissions": ["https://x.com/*"],
   "externally_connectable": {
     "ids": ["lnobhlnamiibdgjdaojoolicmodaohlf"],
