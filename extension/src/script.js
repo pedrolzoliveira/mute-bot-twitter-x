@@ -1,6 +1,6 @@
 import { render, html } from 'lit-html';
 
-const extensionId = 'lnobhlnamiibdgjdaojoolicmodaohlf';
+const extensionId = 'ofpokjlcnaokhfppipgagiiilgipfpde';
 
 let mutedTwitterAccounts = new Set();
 
