@@ -17,9 +17,7 @@ func clearMutedBotsTable() {
 
 func TestCreateServer(t *testing.T) {
 	server := CreateServer()
-	if server == nil {
-		t.Error("Expected server to be created")
-	}
+	assert.NotNil(t, server)
 }
 
 func TestGetMutedBotsWithNoMutedBots(t *testing.T) {
