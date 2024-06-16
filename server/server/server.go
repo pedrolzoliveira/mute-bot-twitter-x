@@ -4,16 +4,13 @@ import (
 	"encoding/json"
 	"mutebotx/database"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 type getMutedBotsResponse []string
 
 func getMutedBots(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	w.Header().Set("Content-Type", "application/json")
-
 	db := database.CreateDatabase()
 	var bots []database.MutedBots
 	var response getMutedBotsResponse = make([]string, 0)
@@ -42,19 +39,6 @@ type MuteBotRequest struct {
 }
 
 func muteBot(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodOptions {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-		w.WriteHeader(http.StatusOK)
-		return
-	}
-
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type")
-	w.Header().Set("Content-Type", "application/json")
-
 	db := database.CreateDatabase()
 
 	var req MuteBotRequest
@@ -77,9 +61,20 @@ func muteBot(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
-func CreateServer() *http.ServeMux {
+func wrap(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		h.ServeHTTP(w, r)
+	})
+}
+
+func CreateServer() http.Handler {
 	server := http.NewServeMux()
+
 	server.HandleFunc("GET /muted-accounts", getMutedBots)
-	server.HandleFunc("/mute", muteBot)
-	return server
+	server.HandleFunc("POST /mute", muteBot)
+
+	handler := cors.Default().Handler(server)
+
+	return wrap(handler)
 }
