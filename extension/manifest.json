@@ -13,12 +13,12 @@
     {
       "world": "MAIN",
       "matches": ["https://x.com/*"],
-      "js": ["dist/script.js"],
+      "js": ["script.js"],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "service_worker": "dist/background.js"
+    "service_worker": "background.js"
   },
   "icons": {
     "16": "icon.png",

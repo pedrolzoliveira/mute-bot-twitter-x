@@ -1,4 +1,5 @@
 const esbuild = require('esbuild');
+const { copy } = require('esbuild-plugin-copy');
 
 esbuild.build({
   entryPoints: [
@@ -7,4 +8,18 @@ esbuild.build({
   ],
   outdir: 'dist',
   bundle: true,
+  plugins: [
+    copy({
+      assets: [
+        {
+          from: ['./manifest.json'],
+          to: ['./manifest.json'],
+        },
+        {
+          from: ['./icon.png'],
+          to: ['./icon.png'],
+        },
+      ],
+    })
+  ],
 });
