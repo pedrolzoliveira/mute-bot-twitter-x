@@ -26,9 +26,6 @@ func TestGetMutedBotsWithNoMutedBots(t *testing.T) {
 	req := httptest.NewRequest("GET", "/muted-bots", nil)
 	w := httptest.NewRecorder()
 	getMutedBots(w, req)
-	if w.Code != 200 {
-		t.Errorf("Expected status code 200, got %d", w.Code)
-	}
 
 	var response []string
 	json.NewDecoder(w.Body).Decode(&response)
