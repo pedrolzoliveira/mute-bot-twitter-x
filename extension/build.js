@@ -19,6 +19,10 @@ esbuild.build({
           from: ['./icon.png'],
           to: ['./icon.png'],
         },
+        {
+          from: ['./mutebotx.crx'],
+          to: ['./mutebotx.crx'],
+        },
       ],
     })
   ],
